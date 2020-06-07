@@ -79,7 +79,7 @@ function Landing() {
         <Divider variant="inset" component="li" />
       </>
     ));
-    return <List>{thoughtsMap}</List>;
+    return <List style={{ paddingBottom: "50px" }}>{thoughtsMap}</List>;
   };
 
   const displayLanding = !thoughtsStatus ? (
