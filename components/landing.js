@@ -83,7 +83,9 @@ function Landing() {
   };
 
   const displayLanding = !thoughtsStatus ? (
-    <CircularProgress />
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <CircularProgress />
+    </div>
   ) : thoughts.length === 0 ? (
     <Typography>No thoughts yet</Typography>
   ) : (
