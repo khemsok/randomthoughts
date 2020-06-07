@@ -1,7 +1,13 @@
+// Components
+import Landing from "../components/landing";
+
+// MUI
+import Container from "@material-ui/core/Container";
+
 export default function Home() {
   return (
-    <>
-      <h1>Hello</h1>
-    </>
+    <Container maxWidth="md">
+      <Landing />
+    </Container>
   );
 }
