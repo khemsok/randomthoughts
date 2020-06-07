@@ -75,8 +75,6 @@ function Landing() {
               </React.Fragment>
             }
           />
-          {/* <Typography>{el.thought}</Typography>
-        <Typography>{moment(el.timestamp).fromNow()}</Typography> */}
         </ListItem>
         <Divider variant="inset" component="li" />
       </>
