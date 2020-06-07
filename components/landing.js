@@ -49,7 +49,8 @@ function Landing() {
         setThought("");
         setThoughtsStatus(false);
         fetchThoughts();
-      });
+      })
+      .catch((e) => console.error(e));
   };
 
   const handleChange = (e) => {
