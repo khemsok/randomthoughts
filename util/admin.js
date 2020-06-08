@@ -1,5 +1,7 @@
 const admin = require("firebase-admin");
-// const serviceAccount = require("../config/serviceAccountKey.json");
+var firebase = require("firebase/app");
+require("firebase/auth");
+require("firebase/firestore");
 
 const serviceAccount = {
   type: process.env.TYPE,
@@ -21,4 +23,19 @@ if (!admin.apps.length) {
 }
 const db = admin.firestore();
 
-module.exports = { admin, db };
+var firebaseConfig = {
+  apiKey: "AIzaSyAGdVIdiuVe2kaCeg_BjyCXPPcL0x7gzqA",
+  authDomain: "randomthoughts-137c6.firebaseapp.com",
+  databaseURL: "https://randomthoughts-137c6.firebaseio.com",
+  projectId: "randomthoughts-137c6",
+  storageBucket: "randomthoughts-137c6.appspot.com",
+  messagingSenderId: "659699113413",
+  appId: "1:659699113413:web:5718b859c63d88f7e67fac",
+  measurementId: "G-YYF17WEBP6",
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+module.exports = { admin, db, firebase };
