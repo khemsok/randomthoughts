@@ -37,10 +37,13 @@ export default function Home({ auth, resp }) {
 }
 
 Home.getInitialProps = async (ctx) => {
-  console.log(ctx.origin);
+  const server =
+    process.env.NODE_ENV !== "production"
+      ? "http://localhost:3000"
+      : "https://randomthoughts-nu.now.sh/";
+
   if (ctx.req.headers.cookie) {
-    console.log(ctx.origin);
-    const resp = await fetch(`http://localhost:3000/api/auth`, {
+    const resp = await fetch(`${server}/api/auth`, {
       headers: {
         cookie: ctx.req.headers.cookie,
       },
