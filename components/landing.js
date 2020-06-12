@@ -42,6 +42,7 @@ function Landing(cookie) {
 
   const deleteThought = async (thoughtId) => {
     console.log(thoughtId, "yooo delete thougth");
+    setThoughtsStatus(false);
     const resp = await fetch(new URL("/api/deletethought", document.baseURI), {
       method: "DELETE",
       headers: {
@@ -52,6 +53,7 @@ function Landing(cookie) {
     const data = await resp.json();
     console.log(data);
     await fetchThoughts();
+    setThoughtsStatus(true);
   };
 
   useEffect(() => {
