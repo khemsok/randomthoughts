@@ -104,6 +104,7 @@ function Landing(cookie) {
             onClick={() => {
               deleteThought(el.thoughtId);
             }}
+            style={{ cursor: "pointer" }}
           />
         </ListItem>
         <Divider variant="inset" component="li" />
