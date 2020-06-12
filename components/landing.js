@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import SignOut from "./signout";
 
 import moment from "moment";
+import Cookies from "js-cookie";
 
 // MUI
 import Typography from "@material-ui/core/Typography";
@@ -13,7 +15,10 @@ import Divider from "@material-ui/core/Divider";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 
-function Landing() {
+// MUI Icons
+import DeleteIcon from "@material-ui/icons/Delete";
+
+function Landing(cookie) {
   const [thought, setThought] = useState("");
   const [thoughts, setThoughts] = useState([]);
   const [thoughtsStatus, setThoughtsStatus] = useState(false);
@@ -21,13 +26,32 @@ function Landing() {
   const fetchThoughts = async () => {
     try {
       const res = await fetch(new URL("/api/thoughts", document.baseURI));
-      const data = await res.json();
-      console.log(data);
-      setThoughts(data);
-      setThoughtsStatus(true);
+      console.log(res.status);
+      if (res.status == 200) {
+        const data = await res.json();
+        console.log(data);
+        setThoughts(data);
+        setThoughtsStatus(true);
+      } else {
+        // Router.replace("/");
+      }
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const deleteThought = async (thoughtId) => {
+    console.log(thoughtId, "yooo delete thougth");
+    const resp = await fetch(new URL("/api/deletethought", document.baseURI), {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ thoughtId: thoughtId }),
+    });
+    const data = await resp.json();
+    console.log(data);
+    await fetchThoughts();
   };
 
   useEffect(() => {
@@ -36,6 +60,8 @@ function Landing() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setThought("");
+    setThoughtsStatus(false);
     fetch(new URL("/api/thought", document.baseURI), {
       method: "POST",
       headers: {
@@ -46,8 +72,6 @@ function Landing() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setThought("");
-        setThoughtsStatus(false);
         fetchThoughts();
       })
       .catch((e) => console.error(e));
@@ -59,8 +83,8 @@ function Landing() {
 
   const mapThoughts = () => {
     const thoughtsMap = thoughts.map((el, id) => (
-      <>
-        <ListItem alignItems="flex-start" key={id}>
+      <div key={el.thoughtId}>
+        <ListItem alignItems="flex-start">
           <ListItemText
             style={{ wordBreak: "break-all" }}
             primary={el.thought}
@@ -76,9 +100,14 @@ function Landing() {
               </React.Fragment>
             }
           />
+          <DeleteIcon
+            onClick={() => {
+              deleteThought(el.thoughtId);
+            }}
+          />
         </ListItem>
         <Divider variant="inset" component="li" />
-      </>
+      </div>
     ));
     return <List style={{ paddingBottom: "50px" }}>{thoughtsMap}</List>;
   };
@@ -95,9 +124,8 @@ function Landing() {
 
   return (
     <div>
-      <Typography variant="h3" align="center" style={{ padding: "40px 0" }}>
-        Random Thoughts 🤔
-      </Typography>
+      <SignOut />
+
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: "30px" }}>
           <TextField

@@ -1,11 +1,13 @@
-const { db } = require("../../util/admin");
+const { db, admin } = require("../../util/admin");
+import authenticated from "../../util/authenticated";
 
-export default (req, res) => {
+export default authenticated((req, res) => {
   if (req.method === "POST") {
     if (req.body.thought.trim() === "") {
       return res.status(400).json({ message: "Thought must not be empty" });
     }
     const newThought = {
+      userId: req.userId,
       thought: req.body.thought,
       timestamp: new Date().toISOString(),
     };
@@ -21,4 +23,4 @@ export default (req, res) => {
         console.log(err);
       });
   }
-};
+});

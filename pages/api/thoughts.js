@@ -1,12 +1,15 @@
-const { db } = require("../../util/admin");
+const { db, admin } = require("../../util/admin");
+import authenticated from "../../util/authenticated";
 
-export default (req, res) => {
+export default authenticated((req, res) => {
   if (req.method === "GET") {
     db.collection("thoughts")
       .orderBy("timestamp", "desc")
+      .where("userId", "==", req.userId)
       .get()
       .then((data) => {
         let thoughts = [];
+        console.log(data);
         data.forEach((doc) => {
           thoughts.push({
             thoughtId: doc.id,
@@ -18,7 +21,7 @@ export default (req, res) => {
       })
       .catch((err) => {
         console.error(err);
-        return res.status(500).json({ error: err.code });
+        return res.status(500).json({ error: err });
       });
   }
-};
+});
