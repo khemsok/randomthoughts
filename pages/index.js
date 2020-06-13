@@ -30,7 +30,6 @@ export default function Home({ auth, resp }) {
           paddingBottom: "130px",
         }}
       >
-        >
         <Typography variant="h2" align="center" style={{ padding: "40px 0" }}>
           Random Thoughts 🤔
         </Typography>
