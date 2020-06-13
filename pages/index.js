@@ -15,11 +15,11 @@ import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 
 export default function Home({ auth, resp }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(auth ? auth : null);
 
-  useEffect(() => {
-    setUser(auth);
-  });
+  // useEffect(() => {
+  //   setUser(auth);
+  // });
 
   return (
     <Container maxWidth="md">
