@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 // Components
 import Landing from "../components/landing";
 import SignIn from "../components/signin";
-import SignUp from "../components/signup";
+import Footer from "../components/footer";
 import { UserContext } from "../components/userContext";
 
 // MUI
@@ -17,21 +17,28 @@ import Typography from "@material-ui/core/Typography";
 export default function Home({ auth, resp }) {
   const [user, setUser] = useState(null);
 
-  console.log(auth);
-  console.log(resp, "hello");
-
   useEffect(() => {
     setUser(auth);
   });
 
   return (
     <Container maxWidth="md">
-      <Typography variant="h3" align="center" style={{ padding: "40px 0" }}>
-        Random Thoughts 🤔
-      </Typography>
-      <UserContext.Provider value={{ user, setUser }}>
-        {user ? <Landing /> : <SignIn />}
-      </UserContext.Provider>
+      <div
+        style={{
+          position: "relative",
+          minHeight: "100vh",
+          paddingBottom: "130px",
+        }}
+      >
+        >
+        <Typography variant="h2" align="center" style={{ padding: "40px 0" }}>
+          Random Thoughts 🤔
+        </Typography>
+        <UserContext.Provider value={{ user, setUser }}>
+          {user ? <Landing /> : <SignIn />}
+        </UserContext.Provider>
+        <Footer />
+      </div>
     </Container>
   );
 }
@@ -48,7 +55,6 @@ Home.getInitialProps = async (ctx) => {
         cookie: ctx.req.headers.cookie,
       },
     });
-    console.log(resp.status);
     if (resp.status === 200) {
       return { auth: true, resp: resp };
     } else {

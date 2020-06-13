@@ -1,17 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React from "react";
 import { UserContext } from "./userContext";
-import SignOut from "./signout";
 import firebase from "../util/firebase";
 
 // MUI
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import Router from "next/router";
 
 function SignIn() {
-  const { user, setUser } = useContext(UserContext);
-
   const googleAuthPopUp = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -24,15 +20,10 @@ function SignIn() {
         // The signed-in user info.
         var user = result.user;
 
-        console.log(token);
-        console.log(user);
-        console.log(result);
-
         firebase
           .auth()
           .currentUser.getIdToken(true)
           .then((idToken) => {
-            console.log(idToken);
             fetch(new URL("/api/auth", document.baseURI), {
               headers: {
                 Authorization: `${idToken}`,
@@ -40,7 +31,6 @@ function SignIn() {
             })
               .then((res) => res.json())
               .then((data) => {
-                console.log(data, "return from authorization");
                 Router.reload("/");
               })
               .catch((err) => console.error(err));
@@ -62,7 +52,31 @@ function SignIn() {
 
   return (
     <>
-      <Button onClick={googleAuthPopUp}>Google Auth</Button>
+      <Button
+        variant="outlined"
+        size="large"
+        style={{
+          color: "#757575",
+          textTransform: "none",
+          boxShadow: "rgba(0, 0, 0, 0.25) 0px 2px 4px 0px",
+          border: "none",
+          height: "60px",
+          width: "250px",
+          display: "block",
+          margin: "0 auto",
+        }}
+        onClick={googleAuthPopUp}
+      >
+        <img
+          src="/google_icon.svg"
+          style={{
+            width: "20px",
+            marginRight: "15px",
+            verticalAlign: "middle",
+          }}
+        />
+        Sign in with Google
+      </Button>
     </>
   );
 }

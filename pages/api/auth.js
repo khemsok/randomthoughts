@@ -19,7 +19,6 @@ const checkAuth = (idToken, res) => {
     .verifyIdToken(idToken)
     .then((decodedToken) => {
       let uid = decodedToken.uid;
-      console.log(decodedToken);
       res.setHeader(
         "Set-Cookie",
         cookie.serialize("authToken", idToken, {

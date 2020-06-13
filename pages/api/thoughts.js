@@ -9,7 +9,6 @@ export default authenticated((req, res) => {
       .get()
       .then((data) => {
         let thoughts = [];
-        console.log(data);
         data.forEach((doc) => {
           thoughts.push({
             thoughtId: doc.id,

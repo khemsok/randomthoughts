@@ -7,13 +7,10 @@ import Cookies from "js-cookie";
 // MUI
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import IconButton from "@material-ui/core/IconButton";
 
 // MUI Icons
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -26,10 +23,8 @@ function Landing(cookie) {
   const fetchThoughts = async () => {
     try {
       const res = await fetch(new URL("/api/thoughts", document.baseURI));
-      console.log(res.status);
       if (res.status == 200) {
         const data = await res.json();
-        console.log(data);
         setThoughts(data);
         setThoughtsStatus(true);
       } else {
@@ -41,7 +36,6 @@ function Landing(cookie) {
   };
 
   const deleteThought = async (thoughtId) => {
-    console.log(thoughtId, "yooo delete thougth");
     setThoughtsStatus(false);
     const resp = await fetch(new URL("/api/deletethought", document.baseURI), {
       method: "DELETE",
@@ -51,7 +45,6 @@ function Landing(cookie) {
       body: JSON.stringify({ thoughtId: thoughtId }),
     });
     const data = await resp.json();
-    console.log(data);
     await fetchThoughts();
     setThoughtsStatus(true);
   };
@@ -73,7 +66,6 @@ function Landing(cookie) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         fetchThoughts();
       })
       .catch((e) => console.error(e));
@@ -86,29 +78,39 @@ function Landing(cookie) {
   const mapThoughts = () => {
     const thoughtsMap = thoughts.map((el, id) => (
       <div key={el.thoughtId}>
-        <ListItem alignItems="flex-start">
-          <ListItemText
-            style={{ wordBreak: "break-all" }}
-            primary={el.thought}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  color="textPrimary"
-                >
-                  {moment(el.timestamp).fromNow()}
-                </Typography>
-              </React.Fragment>
-            }
-          />
-          <DeleteIcon
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: "10px 0",
+          }}
+        >
+          <div
+            style={{
+              flex: "1 1 auto",
+              wordBreak: "break-all",
+              margin: "10px 0px",
+            }}
+          >
+            <Typography variant="subtitle1">{el.thought}</Typography>
+            <Typography variant="body2">
+              {moment(el.timestamp).fromNow()}
+            </Typography>
+          </div>
+          <IconButton
+            style={{
+              float: "right",
+              verticalAlign: "middle",
+            }}
             onClick={() => {
               deleteThought(el.thoughtId);
             }}
             style={{ cursor: "pointer" }}
-          />
-        </ListItem>
+          >
+            <DeleteIcon />
+          </IconButton>
+        </div>
+
         <Divider variant="inset" component="li" />
       </div>
     ));
@@ -133,7 +135,6 @@ function Landing(cookie) {
         <div style={{ marginBottom: "30px" }}>
           <TextField
             label="Type your thoughts..."
-            // multiline
             variant="outlined"
             onChange={handleChange}
             value={thought}

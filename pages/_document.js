@@ -16,6 +16,10 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
           <link
+            href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto+Mono:100,400,700|Roboto:100,400,700&display=swap"
+            rel="stylesheet"
+          />
+          <link
             rel="icon"
             href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/241/thinking-face_1f914.png"
           />

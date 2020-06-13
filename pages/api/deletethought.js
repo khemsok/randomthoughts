@@ -2,8 +2,6 @@ const { db, admin } = require("../../util/admin");
 import authenticated from "../../util/authenticated";
 
 export default authenticated((req, res) => {
-  console.log(req.body.thoughtId, "sdafsadfsdaf");
-
   if (req.method === "DELETE") {
     const document = db.doc(`/thoughts/${req.body.thoughtId}`);
     document

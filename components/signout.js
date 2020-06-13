@@ -16,7 +16,6 @@ function SignOut() {
       .then(function () {
         // Sign-out successful.
         Cookies.remove("authToken");
-        console.log("success");
         Router.reload("/");
       })
       .catch(function (error) {
@@ -24,7 +23,15 @@ function SignOut() {
         // An error happened.
       });
   };
-  return <Button onClick={handleSignOut}>Sign Out</Button>;
+  return (
+    <Button
+      style={{ margin: "10px 0", float: "right" }}
+      size="large"
+      onClick={handleSignOut}
+    >
+      Sign Out
+    </Button>
+  );
 }
 
 export default SignOut;
