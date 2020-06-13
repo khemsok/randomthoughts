@@ -10,6 +10,9 @@ import Router from "next/router";
 function SignIn() {
   const googleAuthPopUp = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: "select_account",
+    });
 
     firebase
       .auth()
