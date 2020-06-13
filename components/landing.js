@@ -11,6 +11,13 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 // MUI Icons
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -19,6 +26,18 @@ function Landing(cookie) {
   const [thought, setThought] = useState("");
   const [thoughts, setThoughts] = useState([]);
   const [thoughtsStatus, setThoughtsStatus] = useState(false);
+  const [deleteThoughtId, setDeleteThoughtId] = useState(null);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = (thoughtId) => {
+    setDeleteThoughtId(thoughtId);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const fetchThoughts = async () => {
     try {
@@ -36,6 +55,7 @@ function Landing(cookie) {
   };
 
   const deleteThought = async (thoughtId) => {
+    setOpen(false);
     setThoughtsStatus(false);
     const resp = await fetch(new URL("/api/deletethought", document.baseURI), {
       method: "DELETE",
@@ -102,9 +122,10 @@ function Landing(cookie) {
               float: "right",
               verticalAlign: "middle",
             }}
-            onClick={() => {
-              deleteThought(el.thoughtId);
-            }}
+            // onClick={() => {
+            //   deleteThought(el.thoughtId);
+            // }}
+            onClick={() => handleClickOpen(el.thoughtId)}
             style={{ cursor: "pointer" }}
           >
             <DeleteIcon />
@@ -144,6 +165,31 @@ function Landing(cookie) {
         </div>
       </form>
       {displayLanding}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>Delete Thought?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Once delete, your thought is gone forever...
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            No
+          </Button>
+          <Button
+            onClick={() => deleteThought(deleteThoughtId)}
+            color="primary"
+            autoFocus
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
