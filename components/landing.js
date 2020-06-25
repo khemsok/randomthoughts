@@ -167,7 +167,8 @@ function Landing(cookie) {
   const [editText, setEditText] = useState("");
   const [updateThoughtId, setUpdateThoughtId] = useState("");
 
-  const updateThought = async () => {
+  const updateThought = async (e) => {
+    e.preventDefault();
     handleEditClose();
     setThoughtsStatus(false);
     const resp = await fetch(new URL("/api/updatethought", document.baseURI), {
@@ -230,24 +231,28 @@ function Landing(cookie) {
       </Dialog>
       <Dialog open={openEdit} onClose={handleEditClose} fullWidth maxWidth="md">
         <DialogTitle id="form-dialog-title">Make Update</DialogTitle>
-        <DialogContent>
-          <TextField
-            // autoFocus
-            // margin="dense"
-            fullWidth
-            defaultValue={editText}
-            value={editText}
-            onChange={handleChangeEditThought}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleEditClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={updateThought} color="primary">
-            Update
-          </Button>
-        </DialogActions>
+        <form onSubmit={updateThought}>
+          <DialogContent>
+            <TextField
+              autoFocus
+              placeholder="Type your thoughts..."
+              required
+              margin="dense"
+              fullWidth
+              defaultValue={editText}
+              value={editText}
+              onChange={handleChangeEditThought}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleEditClose} color="primary">
+              Cancel
+            </Button>
+            <Button type="submit" onSubmit={updateThought} color="primary">
+              Update
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );
