@@ -235,7 +235,7 @@ function Landing(cookie) {
         </DialogActions>
       </Dialog>
       <Dialog open={openEdit} onClose={handleEditClose} fullWidth maxWidth="md">
-        <DialogTitle id="form-dialog-title">Make Update</DialogTitle>
+        <DialogTitle id="form-dialog-title">Update Thought?</DialogTitle>
         <form onSubmit={updateThought}>
           <DialogContent>
             <TextField
