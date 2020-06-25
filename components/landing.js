@@ -21,6 +21,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 // MUI Icons
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 function Landing(cookie) {
   const [thought, setThought] = useState("");
@@ -108,7 +109,7 @@ function Landing(cookie) {
           <div
             style={{
               flex: "1 1 auto",
-              wordBreak: "break-all",
+              wordBreak: "break-word",
               margin: "10px 0px",
             }}
           >
@@ -117,19 +118,24 @@ function Landing(cookie) {
               {moment(el.timestamp).fromNow()}
             </Typography>
           </div>
-          <IconButton
+          <div
             style={{
-              float: "right",
               verticalAlign: "middle",
+              display: "flex",
             }}
-            // onClick={() => {
-            //   deleteThought(el.thoughtId);
-            // }}
-            onClick={() => handleClickOpen(el.thoughtId)}
-            style={{ cursor: "pointer" }}
           >
-            <DeleteIcon />
-          </IconButton>
+            <IconButton
+              onClick={() => handleEditClickOpen(el.thoughtId, el.thought)}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+            <IconButton
+              onClick={() => handleClickOpen(el.thoughtId)}
+              style={{ cursor: "pointer" }}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </div>
         </div>
 
         <Divider variant="inset" component="li" />
@@ -147,6 +153,38 @@ function Landing(cookie) {
   ) : (
     mapThoughts()
   );
+
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleEditClickOpen = (thoughtId, thought) => {
+    setEditText(thought);
+    setUpdateThoughtId(thoughtId);
+    setOpenEdit(true);
+  };
+  const handleEditClose = () => {
+    setOpenEdit(false);
+  };
+
+  const [editText, setEditText] = useState("");
+  const [updateThoughtId, setUpdateThoughtId] = useState("");
+
+  const updateThought = async () => {
+    handleEditClose();
+    setThoughtsStatus(false);
+    const resp = await fetch(new URL("/api/updatethought", document.baseURI), {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ thoughtId: updateThoughtId, thought: editText }),
+    });
+    // const data = await resp.json();
+    await fetchThoughts();
+    setThoughtsStatus(true);
+  };
+
+  const handleChangeEditThought = (e) => {
+    setEditText(e.target.value);
+  };
 
   return (
     <div>
@@ -187,6 +225,27 @@ function Landing(cookie) {
             autoFocus
           >
             Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openEdit} onClose={handleEditClose} fullWidth maxWidth="md">
+        <DialogTitle id="form-dialog-title">Make Update</DialogTitle>
+        <DialogContent>
+          <TextField
+            // autoFocus
+            // margin="dense"
+            fullWidth
+            defaultValue={editText}
+            value={editText}
+            onChange={handleChangeEditThought}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={updateThought} color="primary">
+            Update
           </Button>
         </DialogActions>
       </Dialog>
