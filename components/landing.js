@@ -12,6 +12,7 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -124,17 +125,21 @@ function Landing(cookie) {
               display: "flex",
             }}
           >
-            <IconButton
-              onClick={() => handleEditClickOpen(el.thoughtId, el.thought)}
-            >
-              <EditIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              onClick={() => handleClickOpen(el.thoughtId)}
-              style={{ cursor: "pointer" }}
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
+            <Tooltip title="Update" placement="top">
+              <IconButton
+                onClick={() => handleEditClickOpen(el.thoughtId, el.thought)}
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete" placement="top">
+              <IconButton
+                onClick={() => handleClickOpen(el.thoughtId)}
+                style={{ cursor: "pointer" }}
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
           </div>
         </div>
 
