@@ -1,30 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+<h1>Random Thoughts 🤔</h1>
+<a href="https://randomthoughts-nu.now.sh/"><img src="public/ss1.png"></a>
+<a href="https://randomthoughts-nu.now.sh/"><img src="public/ss2.png"></a>
+<sub>Write down your random thoughts... 💭</sub>
+</div>
 
-## Getting Started
+### Features 🎨
 
-First, run the development server:
+- **🔐 Authentication**: Claim based authentication with Google identity provider
+- **📄 Database**: Store user data with Firebase
+- **✍Thoughts**: Write down your thoughts to look back at later
+- **⏳ Update/Delete**: Update and delete thoughts
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Technologies 🔨
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **⚡NextJS**: Frontend and backend
+- **🔥 Firebase**: Database and authentication
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Developed by [Khem Sok](https://github.com/khemsok) 🧐
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Thanks For Reading!
