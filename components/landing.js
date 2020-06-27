@@ -59,7 +59,7 @@ function Landing(cookie) {
   const deleteThought = async (thoughtId) => {
     setOpen(false);
     setThoughtsStatus(false);
-    const resp = await fetch(new URL("/api/deletethought", document.baseURI), {
+    const resp = await fetch(new URL("/api/thought", document.baseURI), {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -176,7 +176,7 @@ function Landing(cookie) {
     e.preventDefault();
     handleEditClose();
     setThoughtsStatus(false);
-    const resp = await fetch(new URL("/api/updatethought", document.baseURI), {
+    const resp = await fetch(new URL("/api/thought", document.baseURI), {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

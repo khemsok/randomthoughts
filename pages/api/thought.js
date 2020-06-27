@@ -22,5 +22,32 @@ export default authenticated((req, res) => {
         return res.status(500).json({ error: "Something went wrong" });
         console.log(err);
       });
+  } else if (req.method === "PUT") {
+    const document = db.doc(`/thoughts/${req.body.thoughtId}`);
+    document
+      .update({ thought: req.body.thought })
+      .then((response) => res.json({ message: "Thought updated successfully" }))
+      .catch((err) => res.status(500).json({ message: err.code }));
+  } else if (req.method === "DELETE") {
+    const document = db.doc(`/thoughts/${req.body.thoughtId}`);
+    document
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          return res.status(404).json({ message: "Thought not found" });
+        }
+        if (doc.data().userId !== req.userId) {
+          return res.status(403).json({ message: "Unauthorized" });
+        } else {
+          return document.delete();
+        }
+      })
+      .then(() => {
+        res.json({ message: "Thought deleted successfully" });
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).json({ message: err.code });
+      });
   }
 });
