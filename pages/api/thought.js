@@ -2,6 +2,7 @@ const { db, admin } = require("../../util/admin");
 import authenticated from "../../util/authenticated";
 
 export default authenticated((req, res) => {
+  //
   if (req.method === "POST") {
     if (req.body.thought.trim() === "") {
       return res.status(400).json({ message: "Thought must not be empty" });
